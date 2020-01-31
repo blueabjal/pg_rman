@@ -1,0 +1,17 @@
+FROM postgres:10.4
+
+RUN apt-get update
+RUN apt-get install -y apt-utils
+RUN apt-get update
+RUN apt-get install -y make gcc libc-dev libpq-dev postgresql-server-dev-10 zlib1g-dev
+RUN apt-get install -y libpam-dev libedit-dev libselinux1-dev postgresql-contrib
+RUN apt-get install -y libssl-dev libkrb5-dev
+
+
+RUN mkdir /tmp/pg_rman
+ADD pg_rman-REL_10_STABLE /tmp/pg_rman
+WORKDIR /tmp/pg_rman/
+RUN make 
+RUN make install
+RUN rm -rf /tmp/pg_rman
+-----------------------------------
